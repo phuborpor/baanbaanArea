@@ -1,0 +1,19 @@
+/* Regular */
+@font-face {
+  font-family: 'Noto Sans Thai UI';
+  font-style: normal;
+  font-weight: 400;
+  src: url('notosansthaiui-regular-webfont.woff2') format('woff2'),
+    url('notosansthaiui-regular-webfont.woff') format('woff');
+}
+
+
+
+/* Semibold */
+@font-face {
+  font-family: 'Noto Sans Thai UI';
+  font-style: normal;
+  font-weight: 600;
+  src: url('notosansthaiui-semibold-webfont.woff2') format('woff2'),
+    url('notosansthaiui-semibold-webfont.woff') format('woff');
+}
