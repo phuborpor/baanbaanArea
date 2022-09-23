@@ -83,7 +83,7 @@
                   v-model="coor"
                   type="text"
                   class="flex flex-row justify-between h-10 px-4 rounded-lg text-disabled"
-                  style="width: 240px; background: #f7fafc"
+                  style="width: 230px; background: #f7fafc"
                   placeholder="Pin Point"
                   disabled
                 />
@@ -92,9 +92,9 @@
                 <button
                   class="bg-black text-white font-sans text-sm font-semibold rounded-lg h-10"
                   style="width: 83px"
-                  @click="addMarkerInfo"
+                  @click="addInfo"
                 >
-                  <IconsAdd />
+                  <!-- <IconsAdd /> -->
                   <div class="">Add</div>
                 </button>
               </div>
@@ -138,16 +138,22 @@
               </div>
               <div class="pt-4">
                 <div class="bg-white rounded-lg shadow-md">
-                  <div class="w-full h-12">
+                  <div class="w-full h-13">
                     <div class="grid justify-items-center py-4">
                       <IconsPin />
-                      <div v-if="addMarkerInfo">
-                        <div
-                          v-for="(group, index) in groupMark"
-                          :key="index"
-                          :lat-lng="[group.lat, group.lng]"
-                        >
-                          {{ group.lat + ', ' + group.lng }}
+                      <div v-if="addInfo">
+                        <div>
+                          {{ this.makerInfo }}
+                          <button
+                            v-for="(group, index) in groupMark"
+                            :key="index"
+                            :lat-lng="[group.lat, group.lng]"
+                            @click="removeMarker(index)"
+                            class="bg-black text-white flex flex-row justify-between h-10 px-4 py-2 rounded-lg"
+                            style="width: 240px; background: #f7fafc"
+                          >
+                            X
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -238,6 +244,7 @@ export default {
       lat: '',
       lng: '',
       coor: '',
+      makerInfo: '',
     }
   },
   async fetch() {
@@ -276,23 +283,19 @@ export default {
           lng: e.latlng.lng,
           circle: this.circle,
         })
-        // console.log('circle', this.groupMark.circle)
         this.marker1 = e.latlng.lat
         this.marker2 = e.latlng.lng
         console.log(this.marker1, this.marker2)
       } else {
         alert('Marker limit is 3')
       }
-      this.$fetch()
-      this.coor = this.marker1.toFixed(7) + ', ' + this.marker2
+      // this.$fetch()
+      this.coor = this.marker1.toFixed(7) + ', ' + this.marker2.toFixed(7)
       console.log(this.coor)
     },
-    addMarkerInfo(e) {
-      this.groupMark.push({
-        lat: e.latlng.lat,
-        lng: e.latlng.lng,
-        circle: this.circle,
-      })
+    addInfo() {
+      this.makerInfo = this.coor
+      this.$fetch()
     },
     removeMarker(i) {
       for (let index = 0; index < this.groupMark.length; index++) {
@@ -304,6 +307,8 @@ export default {
             this.groupMark = []
             this.sumList = []
             this.projectList = []
+            this.makerInfo = ''
+            this.coor = ''
           }
         }
       }
